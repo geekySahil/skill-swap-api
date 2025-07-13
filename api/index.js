@@ -18,9 +18,22 @@ dotenv.config()
 
 const app = express()
 
+const allowedOrigins = [
+  "https://skill-swap-client-bgk4-sahils-projects-b6d8d58f.vercel.app/", 
+  "https://skill-swap-client-bgk4-git-main-sahils-projects-b6d8d58f.vercel.app/"
+]
+
 
 app.use(cors({
-    origin: 'https://skill-swap-client-bgk4.vercel.app', // Replace with the address of your frontend
+    origin: function (origin, callback) {
+          // allow requests with no origin (like mobile apps or curl requests)
+          if (!origin) return callback(null, true);
+          if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+          } else {
+            return callback(new Error('Not allowed by CORS'));
+          }
+        }, // Replace with the address of your frontend
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -53,10 +66,7 @@ const port = process.env.PORT || 4000
 
 const server = http.createServer(app);
 
-const allowedOrigins = [
-  "https://skill-swap-client-bgk4-sahils-projects-b6d8d58f.vercel.app/", 
-  "https://skill-swap-client-bgk4-git-main-sahils-projects-b6d8d58f.vercel.app/"
-]
+
 
 // Integrate Socket.IO
 const io = new SocketIOServer(server, {
