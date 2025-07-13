@@ -19,8 +19,7 @@ dotenv.config()
 const app = express()
 
 const allowedOrigins = [
-  "https://skill-swap-client-bgk4-sahils-projects-b6d8d58f.vercel.app/", 
-  "https://skill-swap-client-bgk4-git-main-sahils-projects-b6d8d58f.vercel.app/"
+  'https://skill-swap-client-8c8z.vercel.app'
 ]
 
 
