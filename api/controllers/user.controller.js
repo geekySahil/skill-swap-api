@@ -108,11 +108,13 @@ const registerUser = asyncHandler( async(req, res, next) => {
     
         const options = {
             httpOnly: true,
-            secure: false,
-            SameSite: "none",
+            secure: true,
+            sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000
             
         }
+
+
     
         
     
@@ -154,11 +156,11 @@ try {
     
         const options = {
             httpOnly: true,
-            secure: false,
-            SameSite: "none",
+            secure: true,            // cookies only over HTTPS
+            sameSite: "none",        // if you're doing cross-site requests
             maxAge: 24 * 60 * 60 * 1000
-            
-        }
+        };
+
     
         res.status(200)
         .cookie("accessToken", accessToken, options)
@@ -229,10 +231,18 @@ const refreshAccessToken = asyncHandler(async(req, res, next) => {
             }
     
             const {accessToken, refreshToken} = await generateRefreshAndAccessToken(user._id)
+
+            const options = {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+                maxAge: 24 * 60 * 60 * 1000
+            
+            }
     
             res.status(200)
-            .cookie("accessToken", accessToken, {httpOnly: true , secure : true })
-            .cookie("refreshToken", refreshToken, {httpOnly: true , secure : true })
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", refreshToken,options)
             .json(new APIResponse(201, {accessToken, refreshToken}, "Access Token regenerated successfully"))
         } catch (error) {
             throw new APIError(401, "Error: " + error?.message || "Invalid Refresh Token")
