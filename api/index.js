@@ -56,7 +56,7 @@ const server = http.createServer(app);
 // Integrate Socket.IO
 const io = new SocketIOServer(server, {
     cors: {
-        origin: "http://localhost:5173", // Change to your frontend URL
+        origin: "https://skill-swap-client-bgk4.vercel.app", // Change to your frontend URL
         methods: ["GET", "POST"]
     }
 });
