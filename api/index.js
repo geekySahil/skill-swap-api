@@ -20,7 +20,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'https://skill-swap-client-bgk4.vercel.app/sign-in', // Replace with the address of your frontend
+    origin: 'https://skill-swap-client-bgk4.vercel.app', // Replace with the address of your frontend
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
